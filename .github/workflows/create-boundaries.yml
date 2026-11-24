@@ -1,0 +1,157 @@
+
+name: Create Elgin Map Boundaries
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  create-boundaries:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Download Statistics Canada boundaries
+        shell: python
+        run: |
+          import json
+          import urllib.parse
+          import urllib.request
+
+          BASE = (
+              "https://geo.statcan.gc.ca/geo_wa/rest/"
+              "services/2021/Cartographic_boundary_files/"
+              "MapServer"
+          )
+
+          FSA_CODES = [
+              "N5H", "N5P", "N5L",
+              "N0J", "N0L", "N0M", "N5R"
+          ]
+
+          CSD_NAMES = [
+              "St. Thomas",
+              "Aylmer",
+              "Central Elgin",
+              "Malahide",
+              "Bayham",
+              "Southwold",
+              "Dutton/Dunwich",
+              "West Elgin"
+          ]
+
+          def fetch(layer, where):
+              params = urllib.parse.urlencode({
+                  "where": where,
+                  "outFields": "*",
+                  "returnGeometry": "true",
+                  "outSR": "4326",
+                  "f": "geojson"
+              })
+
+              url = f"{BASE}/{layer}/query?{params}"
+
+              request = urllib.request.Request(
+                  url,
+                  headers={
+                      "User-Agent": "ElginOHTProfiles/1.0"
+                  }
+              )
+
+              with urllib.request.urlopen(
+                  request, timeout=120
+              ) as response:
+                  result = json.load(response)
+
+              if result.get("type") != "FeatureCollection":
+                  raise RuntimeError(
+                      f"Invalid GeoJSON response: {result}"
+                  )
+
+              return result
+
+          def quoted(items):
+              return ",".join(
+                  "'" + x.replace("'", "''") + "'"
+                  for x in items
+              )
+
+          # Official 2021 census FSA boundaries
+          fsa = fetch(
+              14,
+              "CFSAUID IN (" + quoted(FSA_CODES) + ")"
+          )
+
+          found_fsa = {
+              f["properties"].get("CFSAUID")
+              for f in fsa["features"]
+          }
+
+          missing_fsa = set(FSA_CODES) - found_fsa
+
+          if missing_fsa:
+              raise RuntimeError(
+                  f"Missing FSA boundaries: {missing_fsa}"
+              )
+
+          # Official 2021 census CSD boundaries
+          csd = fetch(
+              9,
+              "PRUID = '35' AND CSDNAME IN (" +
+              quoted(CSD_NAMES) + ")"
+          )
+
+          # Ensure returned names match dashboard names.
+          for feature in csd["features"]:
+              name = feature["properties"]["CSDNAME"]
+              feature["properties"]["name"] = name
+
+          found_csd = {
+              f["properties"]["CSDNAME"]
+              for f in csd["features"]
+          }
+
+          missing_csd = set(CSD_NAMES) - found_csd
+
+          if missing_csd:
+              print(
+                  "Review unmatched CSD names:",
+                  sorted(missing_csd)
+              )
+
+          if not csd["features"]:
+              raise RuntimeError(
+                  "No CSD boundaries returned"
+              )
+
+          for filename, content in [
+              ("fsa_boundaries.geojson", fsa),
+              ("csd_boundaries.geojson", csd)
+          ]:
+              with open(
+                  filename, "w", encoding="utf-8"
+              ) as file:
+                  json.dump(
+                      content,
+                      file,
+                      ensure_ascii=False,
+                      separators=(",", ":")
+                  )
+
+              print(
+                  filename,
+                  len(content["features"]),
+                  "boundaries"
+              )
+
+      - name: Commit GeoJSON files
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add fsa_boundaries.geojson csd_boundaries.geojson
+          git diff --cached --quiet || git commit -m "Add official Elgin geographic boundaries"
+          git push
