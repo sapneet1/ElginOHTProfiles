@@ -1,86 +1,44 @@
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-CA">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#6c3f99">
 
 <title>Neighbourhood Profiles | Elgin OHT</title>
 
-<link
-  rel="stylesheet"
-  href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-  integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoqgPp8rj0="
-  crossorigin=""
->
-
-<script
-  src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-  integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
-  crossorigin="">
-</script>
+<link rel="stylesheet"
+href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 
 <style>
 :root {
-  --green: #39b54a;
   --purple: #6c3f99;
-  --grey: #c4cacb;
-  --light-green: #e6f6e8;
-  --light-purple: #f4eefb;
+  --green: #39b54a;
   --background: #f3f2f8;
-  --white: #ffffff;
-  --text: #28313c;
-  --muted: #64707b;
   --border: #e3e3e9;
+  --text: #28313c;
+  --muted: #617080;
 }
 
-* {
-  box-sizing: border-box;
-}
-
-html {
-  scroll-behavior: smooth;
-}
+* { box-sizing: border-box; }
 
 body {
   margin: 0;
+  font-family: Arial, sans-serif;
   background: var(--background);
   color: var(--text);
-  font-family: Arial, Helvetica, sans-serif;
-  line-height: 1.55;
+  line-height: 1.5;
 }
 
-button, select {
-  font: inherit;
-}
-
-button {
-  cursor: pointer;
-}
-
-a {
-  color: var(--purple);
-}
-
-button:focus-visible,
-select:focus-visible,
-a:focus-visible {
-  outline: 3px solid var(--green);
-  outline-offset: 3px;
-}
-
-/* HEADER */
-
-.site-header {
+header {
   background: white;
   border-bottom: 1px solid var(--border);
+  padding: 15px 5%;
 }
 
 .header-inner {
-  max-width: 1380px;
+  max-width: 1400px;
   margin: auto;
-  padding: 14px 32px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -88,756 +46,450 @@ a:focus-visible {
 }
 
 .logo {
-  display: block;
-  width: 230px;
-  height: 86px;
-  object-fit: contain;
-  object-position: left center;
+  width: 210px;
+  max-width: 100%;
+  height: auto;
 }
-
-.header-links {
-  display: flex;
-  align-items: center;
-  gap: 24px;
-}
-
-.header-links a {
-  font-size: 13px;
-  font-weight: bold;
-  text-decoration: none;
-}
-
-.website-link {
-  background: var(--purple);
-  color: white;
-  padding: 11px 16px;
-  border-radius: 8px;
-}
-
-/* HERO */
-
-.hero {
-  background: var(--purple);
-  color: white;
-  padding: 52px 0;
-}
-
-.container {
-  max-width: 1380px;
-  margin: auto;
-  padding-left: 32px;
-  padding-right: 32px;
-}
-
-.eyebrow {
-  color: var(--light-green);
-  font-size: 12px;
-  font-weight: bold;
-  letter-spacing: 1.7px;
-  text-transform: uppercase;
-}
-
-.hero h1 {
-  font-size: clamp(32px, 4vw, 48px);
-  line-height: 1.2;
-  margin: 14px 0;
-}
-
-.hero p {
-  color: var(--light-purple);
-  font-size: 15px;
-  max-width: 760px;
-}
-
-/* MAIN */
 
 main {
-  padding-top: 32px;
-  padding-bottom: 70px;
+  max-width: 1400px;
+  margin: auto;
+  padding: 35px 25px 60px;
+}
+
+h1, h2, h3 {
+  color: var(--purple);
+  line-height: 1.25;
+}
+
+h1 { font-size: 36px; margin: 10px 0; }
+h2 { font-size: 25px; margin-bottom: 8px; }
+h3 { font-size: 19px; margin-top: 0; }
+
+p { margin-top: 0; }
+
+.muted { color: var(--muted); }
+
+.eyebrow {
+  color: var(--green);
+  font-size: 12px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
 }
 
 .card {
   background: white;
   border: 1px solid var(--border);
-  border-radius: 13px;
-  padding: 24px;
-  box-shadow: 0 3px 16px rgba(40,30,70,.05);
+  border-radius: 16px;
+  padding: 27px;
+  min-width: 0;
+  overflow: hidden;
 }
 
-.card h3 {
-  color: var(--purple);
-  font-size: 17px;
-  margin: 0 0 8px;
+.section {
+  margin-top: 35px;
 }
 
-.description {
-  font-size: 13px;
-  color: var(--muted);
-  margin: 0 0 18px;
-}
-
-.section-header {
-  margin: 35px 0 17px;
-}
-
-.section-header h2 {
-  color: var(--purple);
-  font-size: 23px;
-  margin: 0 0 5px;
-}
-
-.section-header p {
-  color: var(--muted);
-  font-size: 13px;
-  margin: 0;
-}
-
-/* FILTERS */
-
-.filter-title {
-  color: var(--purple);
-  font-size: 16px;
-  font-weight: bold;
-  margin-bottom: 17px;
-}
-
-.filter-grid {
+.filters {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 18px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
 }
 
-.filter label {
+label {
   display: block;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: bold;
-  margin-bottom: 7px;
+  margin-bottom: 8px;
 }
 
-.filter select {
+select {
   width: 100%;
-  padding: 11px 12px;
+  padding: 12px;
   background: white;
-  border: 1px solid var(--grey);
-  border-radius: 7px;
+  border: 1px solid #c9ced4;
+  border-radius: 8px;
+  font-size: 14px;
 }
 
-.filter-note {
-  margin-top: 16px;
-  background: var(--light-purple);
-  color: #56347b;
-  padding: 11px 14px;
-  border-radius: 7px;
+.note {
   font-size: 12px;
+  color: var(--muted);
+  margin-top: 15px;
 }
-
-/* KPI CARDS */
 
 .kpi-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 17px;
 }
 
 .kpi {
-  border-left: 5px solid var(--purple);
-}
-
-.kpi:nth-child(even) {
-  border-left-color: var(--green);
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 13px;
+  padding: 22px;
 }
 
 .kpi-label {
   font-size: 13px;
-  font-weight: bold;
   color: var(--muted);
+  min-height: 38px;
 }
 
 .kpi-value {
-  color: var(--purple);
-  font-size: 31px;
+  font-size: 30px;
   font-weight: bold;
-  margin: 12px 0 5px;
+  color: var(--purple);
+  margin: 8px 0;
 }
 
-.kpi-detail {
-  font-size: 12px;
+.kpi-period {
+  font-size: 11px;
   color: var(--muted);
 }
-
-/* MAP */
 
 .overview-grid {
   display: grid;
-  grid-template-columns: 1.35fr 1fr;
-  gap: 18px;
+  grid-template-columns: minmax(0, 1.65fr) minmax(300px, .85fr);
+  gap: 20px;
+  align-items: stretch;
+}
+
+/* CRITICAL MAP CONTAINMENT FIX */
+
+.map-shell {
+  position: relative;
+  width: 100%;
+  height: 450px;
+  margin: 20px 0 12px;
+  border: 1px solid var(--border);
+  border-radius: 11px;
+  overflow: hidden;
+  isolation: isolate;
+  contain: layout paint;
+  background: #eef2f4;
 }
 
 #neighbourhoodMap {
-  width: 100%;
-  height: 460px;
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  z-index: 1;
+  position: absolute !important;
+  inset: 0;
+  width: 100% !important;
+  height: 100% !important;
+  overflow: hidden !important;
+  z-index: 0;
+}
+
+#neighbourhoodMap .leaflet-pane,
+#neighbourhoodMap .leaflet-map-pane,
+#neighbourhoodMap .leaflet-tile-pane,
+#neighbourhoodMap .leaflet-overlay-pane {
+  position: absolute;
+}
+
+#neighbourhoodMap img.leaflet-tile {
+  width: 256px !important;
+  height: 256px !important;
+  max-width: none !important;
+  max-height: none !important;
+  object-fit: fill !important;
 }
 
 .map-status {
-  margin-top: 13px;
-  font-size: 12px;
   color: var(--muted);
+  font-size: 12px;
 }
 
-.map-legend {
+.legend {
   display: flex;
   align-items: center;
-  gap: 9px;
-  margin-top: 12px;
+  gap: 8px;
   font-size: 12px;
   color: var(--muted);
 }
 
-.legend-square {
+.legend-dot {
   width: 15px;
   height: 15px;
   background: var(--purple);
-  opacity: .6;
   border-radius: 3px;
 }
 
-/* COMPARISON */
-
-.comparison-control {
-  margin-bottom: 18px;
+.comparison-chart {
+  margin-top: 25px;
 }
 
-.comparison-control label {
-  display: block;
-  font-size: 12px;
-  font-weight: bold;
-  margin-bottom: 7px;
+.compare-row {
+  margin-bottom: 20px;
 }
 
-.comparison-control select {
-  width: 100%;
-  padding: 11px;
-  border: 1px solid var(--grey);
-  border-radius: 7px;
-}
-
-.bar-row {
-  margin: 16px 0;
-}
-
-.bar-label {
+.compare-title {
   display: flex;
   justify-content: space-between;
-  gap: 12px;
-  font-size: 12px;
-  margin-bottom: 7px;
+  gap: 10px;
+  font-size: 13px;
+  font-weight: bold;
+  margin-bottom: 8px;
 }
 
-.bar-track {
-  width: 100%;
-  height: 17px;
-  background: var(--light-purple);
-  border-radius: 5px;
+.track {
+  height: 13px;
+  border-radius: 20px;
+  background: #eeeaf2;
   overflow: hidden;
 }
 
-.bar-fill {
+.fill {
   height: 100%;
   background: var(--purple);
-  border-radius: 5px;
+  border-radius: 20px;
 }
 
-.bar-row:nth-child(even) .bar-fill {
-  background: var(--green);
-}
+.fill.green { background: var(--green); }
 
-/* INDICATORS */
-
-.category-nav {
+.tabs {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 10px;
-  margin-bottom: 18px;
+  margin: 20px 0;
 }
 
-.category-button {
-  background: white;
-  color: var(--text);
+.tab {
+  padding: 14px 8px;
   border: 1px solid var(--border);
-  padding: 15px 10px;
   border-radius: 9px;
-  font-weight: bold;
+  background: white;
+  cursor: pointer;
   font-size: 12px;
+  font-weight: bold;
 }
 
-.category-button[aria-pressed="true"] {
+.tab.active {
   background: var(--purple);
   color: white;
   border-color: var(--purple);
 }
 
-.indicator-grid {
-  display: grid;
-  grid-template-columns: 1.4fr 1fr;
-  gap: 18px;
-}
+.table-wrap { overflow-x: auto; }
 
-.indicator-control {
-  margin: 16px 0;
-}
-
-.indicator-control label {
-  display: block;
-  font-size: 12px;
-  font-weight: bold;
-  margin-bottom: 7px;
-}
-
-.indicator-control select {
-  width: 100%;
-  padding: 11px;
-  border: 1px solid var(--grey);
-  border-radius: 7px;
-}
-
-.table-wrap {
-  overflow-x: auto;
-}
-
-.data-table {
+table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 12px;
+  font-size: 13px;
 }
 
-.data-table th,
-.data-table td {
-  padding: 11px 9px;
+th, td {
+  padding: 13px 10px;
+  border-bottom: 1px solid var(--border);
   text-align: left;
-  border-bottom: 1px solid #eee;
   vertical-align: top;
 }
 
-.data-table th {
-  background: var(--light-purple);
-  color: var(--purple);
-}
-
-.data-note {
-  background: var(--light-purple);
-  border-left: 4px solid var(--purple);
-  padding: 15px;
-  border-radius: 0 8px 8px 0;
-  font-size: 13px;
-  margin-top: 15px;
-}
-
-.data-list {
-  padding-left: 20px;
+th {
+  background: #f8f8fb;
   color: var(--muted);
-  font-size: 13px;
 }
 
-.data-list li {
-  margin-bottom: 10px;
+td:nth-child(2), th:nth-child(2) {
+  text-align: right;
 }
-
-.empty {
-  color: var(--muted);
-  font-size: 13px;
-  padding: 20px 0;
-}
-
-.status {
-  font-size: 12px;
-  color: var(--muted);
-  margin-top: 14px;
-}
-
-/* FOOTER */
 
 footer {
-  background: white;
-  border-top: 1px solid var(--border);
-  padding: 25px 0;
-  font-size: 12px;
+  text-align: center;
+  padding: 25px;
   color: var(--muted);
+  font-size: 12px;
+  border-top: 1px solid var(--border);
 }
 
-/* RESPONSIVE */
-
-@media(max-width:1050px) {
-  .kpi-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .overview-grid,
-  .indicator-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .category-nav {
-    grid-template-columns: repeat(3, 1fr);
-  }
+@media (max-width: 950px) {
+  .overview-grid { grid-template-columns: 1fr; }
+  .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+  .tabs { grid-template-columns: repeat(3, 1fr); }
 }
 
-@media(max-width:700px) {
-  .container {
-    padding-left: 16px;
-    padding-right: 16px;
-  }
-
-  .header-inner {
-    padding: 12px 16px;
-  }
-
-  .logo {
-    width: 165px;
-    height: 65px;
-  }
-
-  .header-links a:not(.website-link) {
-    display: none;
-  }
-
-  .website-link {
-    font-size: 11px !important;
-    padding: 9px;
-  }
-
-  .hero {
-    padding: 38px 0;
-  }
-
-  .filter-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .category-nav {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .card {
-    padding: 18px;
-  }
-
-  #neighbourhoodMap {
-    height: 350px;
-  }
-}
-
-@media(max-width:380px) {
-  .kpi-grid {
-    grid-template-columns: 1fr;
-  }
+@media (max-width: 600px) {
+  main { padding: 22px 14px; }
+  .card { padding: 18px; }
+  .filters { grid-template-columns: 1fr; }
+  .tabs { grid-template-columns: repeat(2, 1fr); }
+  .map-shell { height: 350px; }
+  h1 { font-size: 28px; }
+  .kpi-value { font-size: 24px; }
 }
 </style>
 </head>
 
 <body>
 
-<!-- HEADER -->
-
-<header class="site-header">
+<header>
   <div class="header-inner">
-
-    <a href="https://www.elginoht.ca"
-       aria-label="Elgin Ontario Health Team home">
-      <img
-        class="logo"
-        src="elgin-oht-logo.png"
-        alt="Elgin Ontario Health Team logo">
+    <a href="https://www.elginoht.ca/">
+      <img class="logo"
+           src="elgin-oht-logo.png"
+           alt="Elgin Ontario Health Team">
     </a>
-
-    <nav class="header-links">
-      <a href="#dashboard">Dashboard</a>
-      <a href="#indicators">Health Indicators</a>
-      <a class="website-link"
-         href="https://www.elginoht.ca">
-        Elgin OHT Website
-      </a>
-    </nav>
-
+    <div class="muted">Neighbourhood Profiles</div>
   </div>
 </header>
 
-<!-- HERO -->
+<main>
 
-<section class="hero">
-  <div class="container">
-    <div class="eyebrow">
-      Elgin Ontario Health Team
-    </div>
-
-    <h1>Neighbourhood Profiles</h1>
-
-    <p>
-      Explore population health, demographics,
-      healthcare access and community needs across
-      Elgin. These profiles support evidence-informed
-      planning and a better understanding of the
-      communities we serve.
-    </p>
-  </div>
+<section>
+  <div class="eyebrow">Population Health Insights</div>
+  <h1>Elgin OHT Neighbourhood Profiles</h1>
+  <p class="muted">
+    Explore local population health indicators,
+    view geographic boundaries and compare
+    communities across Elgin.
+  </p>
 </section>
 
-<main class="container" id="dashboard">
+<section class="section card">
+  <h3>Explore Your Community</h3>
 
-  <!-- FILTERS -->
-
-  <section class="card">
-
-    <div class="filter-title">
-      Explore Your Neighbourhood
+  <div class="filters">
+    <div>
+      <label for="geoLevel">Geographic Level</label>
+      <select id="geoLevel">
+        <option value="fsa">Forward Sortation Area (FSA)</option>
+        <option value="csd">Census Subdivision (CSD)</option>
+        <option value="overall">Elgin Overall</option>
+      </select>
     </div>
 
-    <div class="filter-grid">
-
-      <div class="filter">
-        <label for="geoLevel">Geography Level</label>
-        <select id="geoLevel">
-          <option value="fsa">
-            Forward Sortation Area (FSA)
-          </option>
-          <option value="csd">
-            Census Subdivision (CSD)
-          </option>
-          <option value="overall">
-            Elgin Overall
-          </option>
-        </select>
-      </div>
-
-      <div class="filter">
-        <label for="areaSelect">
-          Select Neighbourhood
-        </label>
-        <select id="areaSelect"></select>
-      </div>
-
-      <div class="filter">
-        <label for="compareSelect">
-          Compare With
-        </label>
-        <select id="compareSelect"></select>
-      </div>
-
+    <div>
+      <label for="areaSelect">Select Neighbourhood</label>
+      <select id="areaSelect"></select>
     </div>
 
-    <div class="filter-note"
-         id="filterNote"
-         role="status">
-      Loading dashboard data...
+    <div>
+      <label for="compareSelect">Compare With</label>
+      <select id="compareSelect"></select>
     </div>
-
-  </section>
-
-  <!-- KPI CARDS -->
-
-  <div class="section-header">
-    <h2>Neighbourhood at a Glance</h2>
-    <p id="selectionSummary">
-      Select a neighbourhood to explore its indicators.
-    </p>
   </div>
 
-  <section class="kpi-grid" id="kpiGrid">
-  </section>
+  <p class="note" id="selectionSummary">Loading data...</p>
+</section>
 
-  <!-- MAP AND COMPARISON -->
+<section class="section">
+  <h2>Community Snapshot</h2>
+  <p class="muted">
+    Selected population and primary care access indicators.
+  </p>
+  <div class="kpi-grid" id="kpiGrid"></div>
+</section>
 
-  <div class="section-header">
-    <h2>Explore the Neighbourhood</h2>
-    <p>
-      View geographic boundaries and compare
-      population health indicators.
-    </p>
-  </div>
+<section class="section">
+  <h2>Explore the Neighbourhood</h2>
+  <p class="muted">
+    View geographic boundaries and compare population health indicators.
+  </p>
 
-  <section class="overview-grid">
+  <div class="overview-grid">
 
-    <div class="card">
-
+    <article class="card">
       <h3>Interactive Neighbourhood Map</h3>
-
-      <p class="description">
-        Click a geographic area to explore its
-        population and health indicators.
+      <p class="muted">
+        Click a geographic area to explore its population
+        and health indicators.
       </p>
 
-      <div
-        id="neighbourhoodMap"
-        role="region"
-        aria-label="Interactive neighbourhood map">
+      <div class="map-shell">
+        <div id="neighbourhoodMap"></div>
       </div>
 
-      <div class="map-legend">
-        <span class="legend-square"
-              id="legendSquare"></span>
-        <span id="legendText">
-          FSA boundaries
-        </span>
+      <div class="legend">
+        <span class="legend-dot" id="legendSquare"></span>
+        <span id="legendText">FSA boundaries</span>
       </div>
 
-      <p class="map-status"
-         id="mapStatus"
-         role="status">
-        Loading geographic boundaries...
+      <p class="map-status" id="mapStatus">
+        Loading map...
       </p>
+    </article>
 
-    </div>
-
-    <div class="card">
-
+    <article class="card">
       <h3>Neighbourhood Comparison</h3>
-
-      <p class="description">
+      <p class="muted">
         Compare available indicator values between
         two selected neighbourhoods.
       </p>
 
-      <div class="comparison-control">
-        <label for="comparisonIndicator">
-          Select Indicator
-        </label>
-        <select id="comparisonIndicator"></select>
+      <div style="margin-top:25px">
+        <label for="comparisonIndicator">Select Indicator</label>
+        <select id="comparisonIndicator">
+          <option value="">Choose an indicator</option>
+        </select>
       </div>
 
-      <div id="comparisonChart"></div>
-
-    </div>
-
-  </section>
-
-  <!-- HEALTH INDICATORS -->
-
-  <section id="indicators">
-
-    <div class="section-header">
-      <h2>Health and Community Indicators</h2>
-      <p>
-        Explore neighbourhood indicators by category.
-      </p>
-    </div>
-
-    <nav class="category-nav"
-         id="categoryNav"
-         aria-label="Indicator categories">
-    </nav>
-
-    <div class="indicator-grid">
-
-      <div class="card">
-
-        <h3 id="categoryTitle">
-          Population &amp; Access
-        </h3>
-
-        <p class="description">
-          View available indicators, reporting periods
-          and original data sources.
-        </p>
-
-        <div class="indicator-control">
-          <label for="indicatorSelect">
-            Choose Indicator
-          </label>
-          <select id="indicatorSelect"></select>
-        </div>
-
-        <div id="indicatorChart"></div>
-
-        <h3 style="margin-top:25px">
-          Available Records
-        </h3>
-
-        <div class="table-wrap">
-          <table class="data-table">
-            <thead>
-              <tr>
-                <th>Area</th>
-                <th>Indicator / Breakdown</th>
-                <th>Value</th>
-                <th>Period</th>
-                <th>Source</th>
-              </tr>
-            </thead>
-            <tbody id="recordsBody"></tbody>
-          </table>
-        </div>
-
-        <p class="status" id="recordCount"></p>
-
+      <div class="comparison-chart" id="comparisonChart">
+        Select two neighbourhoods and an indicator to compare.
       </div>
+    </article>
 
-      <div class="card">
+  </div>
+</section>
 
-        <h3>About the Data</h3>
+<section class="section">
+  <h2>Explore Health Indicators</h2>
+  <p class="muted">
+    Browse the data available for your selected geography.
+  </p>
 
-        <p class="description">
-          The Neighbourhood Profiles dashboard brings
-          together multiple data sources to support
-          population health planning.
-        </p>
+  <div class="tabs">
+    <button class="tab active" data-section="Population & Access">
+      Population &amp; Access
+    </button>
+    <button class="tab" data-section="Demographics & Equity">
+      Demographics &amp; Equity
+    </button>
+    <button class="tab" data-section="Chronic Disease">
+      Chronic Disease
+    </button>
+    <button class="tab" data-section="Mental Health">
+      Mental Health
+    </button>
+    <button class="tab" data-section="Social Needs">
+      Social Needs
+    </button>
+  </div>
 
-        <ul class="data-list">
-          <li>
-            Indicators retain their original
-            reporting periods and sources.
-          </li>
-          <li>
-            FSA and CSD geographies are maintained
-            separately.
-          </li>
-          <li>
-            Data is displayed using the
-            appropriate unit and definition.
-          </li>
-          <li>
-            Missing or unavailable values
-            are clearly identified.
-          </li>
-          <li>
-            Map boundaries are geographic reference
-            areas and do not change the underlying
-            indicator values.
-          </li>
-        </ul>
-
-        <div class="data-note">
-          <strong>Data Status</strong>
-          <p id="dataStatus">
-            Loading verified dashboard records...
-          </p>
-        </div>
-
-      </div>
-
+  <div class="card">
+    <h3 id="categoryTitle">Population &amp; Access</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Indicator</th>
+            <th>Value</th>
+            <th>Period</th>
+            <th>Source</th>
+          </tr>
+        </thead>
+        <tbody id="indicatorRows"></tbody>
+      </table>
     </div>
-
-  </section>
+  </div>
+</section>
 
 </main>
 
 <footer>
-  <div class="container">
-    &copy; Elgin Ontario Health Team
-    &middot; Neighbourhood Profiles
-    &middot; Population Health Planning
-  </div>
+  Elgin Ontario Health Team · Neighbourhood Profiles
+  <br>
+  Data availability and geographic coverage vary by indicator.
 </footer>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
 <script>
 "use strict";
 
-/* DATA FILES */
+const $ = id => document.getElementById(id);
 
-const DATA_FILE = "elgin_dashboard_data.json";
-
-const BOUNDARY_FILES = {
+const FILES = {
   fsa: "fsa_boundaries.geojson",
   csd: "csd_boundaries.geojson"
 };
@@ -847,575 +499,432 @@ const COLOURS = {
   csd: "#39b54a"
 };
 
-const CATEGORIES = [
-  "Population & Access",
-  "Demographics & Equity",
-  "Chronic Disease",
-  "Mental Health",
-  "Social Needs"
-];
-
-const $ = id => document.getElementById(id);
-
-let records = [];
-let geographyMetadata = [];
-let currentCategory = CATEGORIES[0];
-
-let map;
-let boundaryLayer;
-let boundaryRequest = 0;
-
-/* GEOGRAPHY */
-
-const fallbackAreas = {
-  fsa: [
-    "N5H", "N5P", "N5L",
-    "N0J", "N0L", "N0M", "N5R"
-  ],
-
+const AREAS = {
+  fsa: ["N5H", "N5P", "N5L", "N5R", "N0J", "N0L", "N0M"],
   csd: [
-    "St. Thomas",
     "Aylmer",
     "Central Elgin",
-    "Malahide",
-    "Bayham",
-    "Southwold",
     "Dutton/Dunwich",
-    "West Elgin"
-  ],
-
-  overall: ["ELGIN"]
+    "Malahide",
+    "Southwold",
+    "St. Thomas",
+    "West Elgin",
+    "Bayham"
+  ]
 };
 
-function normaliseName(value) {
+let records = [];
+let geography = [];
+let map = null;
+let boundaryLayer = null;
+let activeSection = "Population & Access";
+let requestId = 0;
+
+const boundaryCache = {};
+
+function normalize(value) {
   return String(value || "")
-    .trim()
     .toLowerCase()
     .replace(/[^a-z0-9]/g, "");
 }
 
-function areaOptions(level) {
-  const type = level === "fsa"
-    ? "FSA"
-    : level === "csd"
-      ? "CSD"
-      : "OHT/CSD aggregate";
-
-  const metadataAreas = geographyMetadata
-    .filter(g => g.type === type)
-    .map(g => g.code);
-
-  return metadataAreas.length
-    ? [...new Set(metadataAreas)]
-    : fallbackAreas[level];
+function option(value, text) {
+  const element = document.createElement("option");
+  element.value = value;
+  element.textContent = text;
+  return element;
 }
 
-function addOption(select, value, label) {
-  const option = document.createElement("option");
-  option.value = value;
-  option.textContent = label || value;
-  select.appendChild(option);
+function getAreas(level) {
+  if (level === "overall") return ["ELGIN"];
+
+  const fromData = geography
+    .filter(g => normalize(g.type) === normalize(level))
+    .map(g => g.code)
+    .filter(Boolean);
+
+  return fromData.length
+    ? [...new Set(fromData)]
+    : AREAS[level];
 }
 
-function fillSelect(select, values, firstLabel) {
-  select.replaceChildren();
-
-  if (firstLabel !== null) {
-    addOption(select, "", firstLabel);
-  }
-
-  values.forEach(value => {
-    addOption(select, value);
-  });
+function areaName(code) {
+  const item = geography.find(g => g.code === code);
+  return item?.name || code;
 }
 
-function matchArea(name, level) {
-  const areas = areaOptions(level);
-  const wanted = normaliseName(name);
-
-  const direct = areas.find(area =>
-    normaliseName(area) === wanted
-  );
-
-  if (direct) return direct;
-
-  const metadata = geographyMetadata.find(g =>
-    g.type === (level === "fsa" ? "FSA" : "CSD") &&
-    normaliseName(g.name) === wanted
-  );
-
-  return metadata && areas.includes(metadata.code)
-    ? metadata.code
-    : "";
+function selectedArea() {
+  return $("areaSelect").value || "ELGIN";
 }
 
-function updateGeography() {
-  const level = $("geoLevel").value;
-  const areas = areaOptions(level);
-
-  fillSelect(
-    $("areaSelect"),
-    areas,
-    level === "overall"
-      ? null
-      : "Select a neighbourhood"
-  );
-
-  fillSelect(
-    $("compareSelect"),
-    level === "overall" ? [] : areas,
-    "No comparison"
-  );
-
-  if (level === "overall") {
-    $("areaSelect").value = "ELGIN";
-  }
-
-  renderDashboard();
-  updateMap();
+function areaRecords(area) {
+  return records.filter(r => r.geography === area);
 }
 
-/* DATA FORMATTING */
+function isPresent(value) {
+  return value !== null &&
+         value !== undefined &&
+         value !== "";
+}
 
 function formatValue(record) {
-  if (
-    !record ||
-    record.value === null ||
-    record.value === undefined ||
-    record.value === ""
-  ) {
-    return "Not available";
-  }
+  if (!record || !isPresent(record.value)) return "N/A";
 
-  if (typeof record.value !== "number") {
+  const value = Number(record.value);
+  const unit = String(record.unit || "").toLowerCase();
+
+  if (!Number.isFinite(value)) {
     return String(record.value);
   }
 
-  if (record.unit === "Percentage") {
-    return (record.value * 100)
-      .toLocaleString("en-CA", {
-        maximumFractionDigits: 2
-      }) + "%";
+  if (unit.includes("percent") || unit === "%") {
+    const percent = Math.abs(value) <= 1 ? value * 100 : value;
+    return percent.toLocaleString("en-CA", {
+      maximumFractionDigits: 1
+    }) + "%";
   }
 
-  const formatted = record.value.toLocaleString(
-    "en-CA",
-    { maximumFractionDigits: 2 }
-  );
+  return value.toLocaleString("en-CA", {
+    maximumFractionDigits: 2
+  });
+}
 
-  if (
-    !record.unit ||
-    record.unit === "Count" ||
-    record.unit === "Quintile"
-  ) {
-    return formatted;
+function populateAreas() {
+  const level = $("geoLevel").value;
+  const areas = getAreas(level);
+
+  $("areaSelect").replaceChildren();
+  $("compareSelect").replaceChildren();
+
+  $("compareSelect").append(option("", "No comparison"));
+
+  if (level === "overall") {
+    $("areaSelect").append(option("ELGIN", "Elgin Overall"));
+    $("compareSelect").disabled = true;
+  } else {
+    $("areaSelect").append(
+      option("", "All " + level.toUpperCase() + "s (Elgin overview)")
+    );
+
+    areas.forEach(area => {
+      const label = area + " — " + areaName(area);
+      $("areaSelect").append(option(area, label));
+      $("compareSelect").append(option(area, label));
+    });
+
+    $("compareSelect").disabled = false;
   }
 
-  return formatted + " " + record.unit;
-}
-
-function areaRecords(area, category = null) {
-  return records.filter(record =>
-    record.geography === area &&
-    (!category || record.section === category)
-  );
-}
-
-function baseRecord(area, indicator) {
-  return areaRecords(area).find(record =>
-    record.indicator === indicator &&
-    !record.age_group &&
-    !record.sex &&
-    !record.condition
-  );
-}
-
-/* KPI CARDS */
-
-function createKpi(title, record) {
-  const card = document.createElement("div");
-  card.className = "card kpi";
-
-  const label = document.createElement("div");
-  label.className = "kpi-label";
-  label.textContent = title;
-
-  const value = document.createElement("div");
-  value.className = "kpi-value";
-  value.textContent = record
-    ? formatValue(record)
-    : "—";
-
-  const detail = document.createElement("div");
-  detail.className = "kpi-detail";
-
-  detail.textContent = record
-    ? record.period || "Period not specified"
-    : "No matching data available";
-
-  card.append(label, value, detail);
-
-  return card;
+  renderDashboard();
+  loadBoundaries();
 }
 
 function renderKpis() {
-  const area = $("areaSelect").value;
-  const grid = $("kpiGrid");
+  const data = areaRecords(selectedArea())
+    .filter(r => r.section === "Population & Access");
 
-  grid.replaceChildren();
-
-  const metrics = [
-    ["Total Population", "Total Population"],
-    ["Unattached Population", "Unattached Population"],
-    ["Attributed Population", "Attributed Population"],
-    [
-      "Mental Health & Addictions",
-      "Population with any Mental Health & Addictions"
-    ]
+  const priorities = [
+    "Total Population",
+    "Unattached Population",
+    "Attributed Population",
+    "Unattached Rate"
   ];
 
-  metrics.forEach(([title, indicator]) => {
-    grid.appendChild(
-      createKpi(
-        title,
-        area ? baseRecord(area, indicator) : null
-      )
+  const available = [...new Set(data.map(r => r.indicator))];
+
+  const indicators = [
+    ...priorities.filter(x => available.includes(x)),
+    ...available.filter(x => !priorities.includes(x))
+  ].slice(0, 4);
+
+  $("kpiGrid").replaceChildren();
+
+  while (indicators.length < 4) indicators.push("");
+
+  indicators.forEach(indicator => {
+    const record = data.find(
+      r => r.indicator === indicator && isPresent(r.value)
+    );
+
+    const card = document.createElement("div");
+    card.className = "kpi";
+
+    const label = document.createElement("div");
+    label.className = "kpi-label";
+    label.textContent = indicator || "Additional indicator";
+
+    const value = document.createElement("div");
+    value.className = "kpi-value";
+    value.textContent = formatValue(record);
+
+    const period = document.createElement("div");
+    period.className = "kpi-period";
+    period.textContent = record?.period || "No data available";
+
+    card.append(label, value, period);
+    $("kpiGrid").append(card);
+  });
+}
+
+function renderTable() {
+  $("categoryTitle").textContent = activeSection;
+
+  const data = areaRecords(selectedArea())
+    .filter(r => r.section === activeSection);
+
+  $("indicatorRows").replaceChildren();
+
+  if (!data.length) {
+    const row = document.createElement("tr");
+    const cell = document.createElement("td");
+    cell.colSpan = 4;
+    cell.textContent = "No data available for this category.";
+    row.append(cell);
+    $("indicatorRows").append(row);
+    return;
+  }
+
+  data.forEach(record => {
+    const row = document.createElement("tr");
+
+    const indicator = [
+      record.indicator,
+      record.condition,
+      record.age_group,
+      record.sex
+    ].filter(Boolean).join(" · ");
+
+    [
+      indicator,
+      formatValue(record),
+      record.period || "—",
+      record.source || "—"
+    ].forEach(text => {
+      const cell = document.createElement("td");
+      cell.textContent = text;
+      row.append(cell);
+    });
+
+    $("indicatorRows").append(row);
+  });
+}
+
+function getComparableRecords() {
+  const first = selectedArea();
+  const second = $("compareSelect").value;
+
+  if (!second || first === "ELGIN" || first === second) {
+    return [];
+  }
+
+  const firstRecords = areaRecords(first);
+  const secondRecords = areaRecords(second);
+
+  return firstRecords.filter(r =>
+    isPresent(r.value) &&
+    secondRecords.some(other =>
+      other.indicator_id === r.indicator_id &&
+      isPresent(other.value)
+    )
+  );
+}
+
+function renderComparisonOptions() {
+  const select = $("comparisonIndicator");
+  const previous = select.value;
+  const comparable = getComparableRecords();
+
+  const unique = new Map();
+
+  comparable.forEach(record => {
+    if (!unique.has(record.indicator_id)) {
+      unique.set(record.indicator_id, record);
+    }
+  });
+
+  select.replaceChildren(option("", "Choose an indicator"));
+
+  unique.forEach(record => {
+    select.append(
+      option(record.indicator_id, record.indicator)
     );
   });
 
-  $("selectionSummary").textContent = area
-    ? "Showing available indicators for " + area
-    : "Select a neighbourhood to explore its indicators.";
-}
+  if (unique.has(previous)) select.value = previous;
 
-/* COMPARISON CHART */
-
-function createBar(record, max, index) {
-  const row = document.createElement("div");
-  row.className = "bar-row";
-
-  const label = document.createElement("div");
-  label.className = "bar-label";
-
-  const name = document.createElement("span");
-  name.textContent = record.geography;
-
-  const value = document.createElement("strong");
-  value.textContent = formatValue(record);
-
-  label.append(name, value);
-
-  const track = document.createElement("div");
-  track.className = "bar-track";
-
-  const fill = document.createElement("div");
-  fill.className = "bar-fill";
-
-  fill.style.background =
-    index === 0 ? COLOURS.fsa : COLOURS.csd;
-
-  fill.style.width = max > 0
-    ? Math.max(
-        0,
-        Math.min(100, record.value / max * 100)
-      ) + "%"
-    : "0%";
-
-  track.appendChild(fill);
-  row.append(label, track);
-
-  return row;
+  renderComparison();
 }
 
 function renderComparison() {
-  const area = $("areaSelect").value;
-  const compare = $("compareSelect").value;
-  const select = $("comparisonIndicator");
-  const previous = select.value;
+  const holder = $("comparisonChart");
+  holder.replaceChildren();
 
-  const names = [
-    ...new Set([
-      ...areaRecords(area),
-      ...areaRecords(compare)
-    ].map(record => record.indicator))
-  ].sort();
+  const first = selectedArea();
+  const second = $("compareSelect").value;
+  const indicatorId = $("comparisonIndicator").value;
 
-  fillSelect(select, names, "Choose an indicator");
-
-  if (names.includes(previous)) {
-    select.value = previous;
-  }
-
-  drawComparison();
-}
-
-function drawComparison() {
-  const area = $("areaSelect").value;
-  const compare = $("compareSelect").value;
-  const indicator = $("comparisonIndicator").value;
-  const container = $("comparisonChart");
-
-  container.replaceChildren();
-
-  const message = text => {
-    const p = document.createElement("p");
-    p.className = "empty";
-    p.textContent = text;
-    container.appendChild(p);
-  };
-
-  if (!area || !compare || !indicator) {
-    message(
-      "Select two neighbourhoods and an indicator to compare."
-    );
+  if (!second || first === "ELGIN" || first === second) {
+    holder.textContent =
+      "Select two different neighbourhoods to compare.";
     return;
   }
 
-  if (area === compare) {
-    message("Choose two different neighbourhoods.");
+  if (!indicatorId) {
+    holder.textContent =
+      "Choose an indicator to view the comparison.";
     return;
   }
 
-  const a = baseRecord(area, indicator);
-  const b = baseRecord(compare, indicator);
+  const a = areaRecords(first).find(
+    r => r.indicator_id === indicatorId
+  );
+
+  const b = areaRecords(second).find(
+    r => r.indicator_id === indicatorId
+  );
 
   if (!a || !b) {
-    message(
-      "A comparable value is not available for both areas."
-    );
+    holder.textContent = "Comparable data is unavailable.";
     return;
   }
 
-  if (
-    typeof a.value !== "number" ||
-    typeof b.value !== "number" ||
-    a.unit !== b.unit ||
-    a.period !== b.period ||
-    a.value < 0 ||
-    b.value < 0
-  ) {
-    message(
-      "Values cannot be compared directly because units, " +
-      "reporting periods or numeric availability differ."
-    );
-    return;
-  }
+  const maximum = Math.max(
+    Math.abs(Number(a.value)),
+    Math.abs(Number(b.value)),
+    0.000001
+  );
 
-  const max = Math.max(a.value, b.value, 0);
+  [[first, a, false], [second, b, true]].forEach(
+    ([name, record, green]) => {
+      const row = document.createElement("div");
+      row.className = "compare-row";
 
-  container.append(
-    createBar(a, max, 0),
-    createBar(b, max, 1)
+      const title = document.createElement("div");
+      title.className = "compare-title";
+
+      const left = document.createElement("span");
+      left.textContent = name;
+
+      const right = document.createElement("span");
+      right.textContent = formatValue(record);
+
+      title.append(left, right);
+
+      const track = document.createElement("div");
+      track.className = "track";
+
+      const fill = document.createElement("div");
+      fill.className = green ? "fill green" : "fill";
+      fill.style.width =
+        Math.abs(Number(record.value)) / maximum * 100 + "%";
+
+      track.append(fill);
+      row.append(title, track);
+      holder.append(row);
+    }
   );
 
   const note = document.createElement("p");
-  note.className = "status";
+  note.className = "note";
   note.textContent =
-    "Reporting period: " + (a.period || "Not specified");
-
-  container.appendChild(note);
+    "Compare values only when reporting periods and indicator definitions are consistent.";
+  holder.append(note);
 }
 
-/* INDICATOR CATEGORIES */
+function renderDashboard() {
+  const area = selectedArea();
 
-function buildCategories() {
-  const nav = $("categoryNav");
-  nav.replaceChildren();
+  $("selectionSummary").textContent =
+    "Selected geography: " +
+    (area === "ELGIN" ? "Elgin Overall" : areaName(area));
 
-  CATEGORIES.forEach(category => {
-    const button = document.createElement("button");
-
-    button.type = "button";
-    button.className = "category-button";
-    button.textContent = category;
-    button.dataset.category = category;
-
-    button.setAttribute(
-      "aria-pressed",
-      String(category === currentCategory)
-    );
-
-    button.addEventListener("click", () => {
-      currentCategory = category;
-      updateCategory();
-    });
-
-    nav.appendChild(button);
-  });
+  renderKpis();
+  renderTable();
+  renderComparisonOptions();
+  styleBoundaries();
 }
 
-function updateCategory() {
-  document.querySelectorAll(
-    ".category-button"
-  ).forEach(button => {
-    button.setAttribute(
-      "aria-pressed",
-      String(
-        button.dataset.category === currentCategory
-      )
-    );
-  });
-
-  $("categoryTitle").textContent = currentCategory;
-
-  const indicators = [
-    ...new Set(
-      records
-        .filter(r => r.section === currentCategory)
-        .map(r => r.indicator)
-    )
-  ].sort();
-
-  fillSelect(
-    $("indicatorSelect"),
-    indicators,
-    "All indicators"
-  );
-
-  renderIndicators();
-}
-
-function renderIndicators() {
-  const area = $("areaSelect").value;
-  const indicator = $("indicatorSelect").value;
-
-  const matching = areaRecords(
-    area,
-    currentCategory
-  ).filter(r =>
-    !indicator || r.indicator === indicator
-  );
-
-  const body = $("recordsBody");
-  body.replaceChildren();
-
-  matching.forEach(record => {
-    const row = document.createElement("tr");
-
-    const breakdown = [
-      record.age_group,
-      record.sex,
-      record.condition
-    ].filter(Boolean).join(" · ");
-
-    const values = [
-      record.geography,
-      record.indicator +
-        (breakdown ? " — " + breakdown : ""),
-      formatValue(record),
-      record.period || "Not specified",
-      record.source || "Not specified"
-    ];
-
-    values.forEach(value => {
-      const cell = document.createElement("td");
-      cell.textContent = value;
-      row.appendChild(cell);
-    });
-
-    body.appendChild(row);
-  });
-
-  $("recordCount").textContent =
-    matching.length + " record(s) available.";
-
-  const chartContainer = $("indicatorChart");
-  chartContainer.replaceChildren();
-
-  if (indicator && matching.length === 1) {
-    const p = document.createElement("p");
-    p.className = "data-note";
-
-    p.textContent =
-      indicator + ": " + formatValue(matching[0]);
-
-    chartContainer.appendChild(p);
-  } else if (!matching.length) {
-    const p = document.createElement("p");
-    p.className = "empty";
-    p.textContent =
-      "No records are available for this selection.";
-    chartContainer.appendChild(p);
-  }
-}
-
-/* INTERACTIVE MAP */
+/* LEAFLET MAP */
 
 function initMap() {
-  if (map) return;
-
-  if (typeof L === "undefined") {
-    $("mapStatus").textContent =
-      "The mapping library could not be loaded.";
-    return;
-  }
+  if (map || typeof L === "undefined") return;
 
   map = L.map("neighbourhoodMap", {
-    scrollWheelZoom: false
+    preferCanvas: true,
+    scrollWheelZoom: false,
+    zoomAnimation: false,
+    fadeAnimation: false,
+    markerZoomAnimation: false,
+    maxZoom: 15
   }).setView([42.78, -81.05], 10);
 
   L.tileLayer(
     "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
     {
       attribution: "&copy; OpenStreetMap contributors",
-      maxZoom: 18
+      maxZoom: 18,
+      updateWhenIdle: true,
+      keepBuffer: 2
     }
   ).addTo(map);
+
+  window.addEventListener("resize", () => {
+    map.invalidateSize({ pan: false });
+  });
 }
 
 function boundaryName(feature, level) {
-  const p = feature.properties || {};
+  const properties = feature.properties || {};
 
-  if (level === "fsa") {
-    return (
-      p.CFSAUID ||
-      p.FSA ||
-      p.fsa ||
-      p.code ||
-      ""
-    );
+  const keys = level === "fsa"
+    ? ["CFSAUID", "CFSA", "FSA", "fsa", "code"]
+    : ["CSDNAME", "CSD_NAME", "name", "NAME", "code"];
+
+  for (const key of keys) {
+    if (properties[key] !== undefined) {
+      return String(properties[key]);
+    }
   }
 
-  return (
-    p.CSDNAME ||
-    p.name ||
-    p.NAME ||
-    p.code ||
-    ""
-  );
+  return "";
 }
 
-function highlightSelectedBoundary() {
+function matchArea(name, level) {
+  return getAreas(level).find(
+    area => normalize(area) === normalize(name)
+  ) || null;
+}
+
+function styleBoundaries() {
   if (!boundaryLayer) return;
 
-  const selected = $("areaSelect").value;
   const level = $("geoLevel").value;
-  const colour = COLOURS[level];
+  const selected = $("areaSelect").value;
+  const colour = COLOURS[level] || COLOURS.fsa;
 
   boundaryLayer.eachLayer(layer => {
-    const name = boundaryName(
-      layer.feature,
-      level
-    );
-
-    const matchingArea = matchArea(name, level);
-    const isSelected =
-      matchingArea && matchingArea === selected;
+    const name = boundaryName(layer.feature, level);
+    const area = matchArea(name, level);
+    const active = Boolean(selected) && area === selected;
 
     layer.setStyle({
       color: colour,
-      weight: isSelected ? 4 : 2,
+      weight: active ? 3 : 1.5,
       fillColor: colour,
-      fillOpacity: isSelected ? 0.4 : 0.15
+      fillOpacity: active ? 0.30 : 0.10
     });
   });
 }
 
-async function updateMap() {
-  if (!map) return;
-
-  const requestId = ++boundaryRequest;
+async function loadBoundaries() {
+  const currentRequest = ++requestId;
   const level = $("geoLevel").value;
+
+  if (!map) {
+    $("mapStatus").textContent =
+      "Map unavailable. Leaflet could not load.";
+    return;
+  }
 
   if (boundaryLayer) {
     map.removeLayer(boundaryLayer);
@@ -1424,49 +933,44 @@ async function updateMap() {
 
   if (level === "overall") {
     $("mapStatus").textContent =
-      "Select FSA or CSD geography to view boundaries.";
-    $("legendText").textContent = "Elgin Overall";
+      "Select FSA or CSD to display boundaries.";
     return;
   }
 
-  const colour = COLOURS[level];
-
-  $("legendSquare").style.background = colour;
-
+  $("legendSquare").style.background = COLOURS[level];
   $("legendText").textContent =
-    level === "fsa"
-      ? "Forward Sortation Area boundaries"
-      : "Census Subdivision boundaries";
+    level.toUpperCase() + " boundaries";
 
-  $("mapStatus").textContent =
-    "Loading " + level.toUpperCase() +
-    " geographic boundaries...";
+  $("mapStatus").textContent = "Loading boundaries...";
 
   try {
-    const response = await fetch(
-      BOUNDARY_FILES[level],
-      { cache: "no-store" }
-    );
+    if (!boundaryCache[level]) {
+      const response = await fetch(FILES[level]);
 
-    if (!response.ok) {
-      throw new Error(
-        "Boundary file unavailable (HTTP " +
-        response.status + ")"
-      );
+      if (!response.ok) {
+        throw new Error("Boundary file not found.");
+      }
+
+      boundaryCache[level] = await response.json();
     }
 
-    const geojson = await response.json();
+    if (currentRequest !== requestId) return;
 
-    if (requestId !== boundaryRequest) {
-      return;
+    const geojson = boundaryCache[level];
+
+    if (!geojson.features?.length) {
+      throw new Error("No geographic features found.");
     }
 
     boundaryLayer = L.geoJSON(geojson, {
+      renderer: L.canvas({ padding: 0.25 }),
+      smoothFactor: 2,
+
       style: {
-        color: colour,
-        weight: 2,
-        fillColor: colour,
-        fillOpacity: 0.15
+        color: COLOURS[level],
+        weight: 1.5,
+        fillColor: COLOURS[level],
+        fillOpacity: 0.10
       },
 
       onEachFeature(feature, layer) {
@@ -1474,24 +978,18 @@ async function updateMap() {
 
         if (!name) return;
 
-        layer.bindTooltip(String(name), {
-          sticky: true
-        });
+        layer.bindTooltip(name, { sticky: false });
 
         layer.on("click", () => {
-          const area = matchArea(name, level);
+          const matched = matchArea(name, level);
 
-          if (!area) {
+          if (matched) {
+            $("areaSelect").value = matched;
+            renderDashboard();
+          } else {
             $("mapStatus").textContent =
-              "No matching dashboard area found for " +
-              name + ".";
-            return;
+              "No dashboard data matched " + name;
           }
-
-          $("areaSelect").value = area;
-
-          renderDashboard();
-          highlightSelectedBoundary();
         });
       }
     }).addTo(map);
@@ -1501,117 +999,84 @@ async function updateMap() {
     if (bounds.isValid()) {
       map.fitBounds(bounds, {
         padding: [20, 20],
-        maxZoom: 12
+        maxZoom: 11,
+        animate: false
       });
     }
 
-    highlightSelectedBoundary();
+    map.invalidateSize({ pan: false });
+    styleBoundaries();
 
     $("mapStatus").textContent =
-      "Click a neighbourhood boundary to view " +
-      "its available health indicators.";
+      "Click a boundary to view its health indicators.";
 
   } catch (error) {
-    if (requestId !== boundaryRequest) return;
+    if (currentRequest !== requestId) return;
 
     $("mapStatus").textContent =
-      "Map boundaries are not available yet. " +
-      "Upload " + BOUNDARY_FILES[level] +
-      " to the GitHub repository.";
+      "Map error: " + error.message;
+
+    console.error(error);
   }
 }
 
-/* UPDATE DASHBOARD */
+/* START DASHBOARD */
 
-function renderDashboard() {
-  const level = $("geoLevel").value;
+async function start() {
+  try {
+    const response = await fetch(
+      "elgin_dashboard_data.json",
+      { cache: "no-cache" }
+    );
 
-  $("filterNote").textContent =
-    "Viewing " + level.toUpperCase() +
-    " geography. FSA and CSD indicators " +
-    "are not combined or treated as equivalent.";
+    if (!response.ok) {
+      throw new Error("Dashboard data file not found.");
+    }
 
-  renderKpis();
-  renderComparison();
-  renderIndicators();
-  highlightSelectedBoundary();
+    const data = await response.json();
+
+    records = Array.isArray(data.records)
+      ? data.records
+      : [];
+
+    geography = Array.isArray(data.geography)
+      ? data.geography
+      : [];
+
+  } catch (error) {
+    console.error(error);
+    $("selectionSummary").textContent =
+      "Unable to load dashboard data: " + error.message;
+  }
+
+  initMap();
+  populateAreas();
 }
 
-/* EVENTS */
+$("geoLevel").addEventListener("change", populateAreas);
 
-$("geoLevel").addEventListener(
-  "change",
-  updateGeography
-);
+$("areaSelect").addEventListener("change", renderDashboard);
 
-$("areaSelect").addEventListener(
-  "change",
-  renderDashboard
-);
+$("compareSelect").addEventListener("change", renderDashboard);
 
-$("compareSelect").addEventListener(
+$("comparisonIndicator").addEventListener(
   "change",
   renderComparison
 );
 
-$("comparisonIndicator").addEventListener(
-  "change",
-  drawComparison
-);
+document.querySelectorAll(".tab").forEach(button => {
+  button.addEventListener("click", () => {
+    activeSection = button.dataset.section;
 
-$("indicatorSelect").addEventListener(
-  "change",
-  renderIndicators
-);
+    document.querySelectorAll(".tab").forEach(tab => {
+      tab.classList.toggle("active", tab === button);
+    });
 
-/* INITIALIZATION */
+    renderTable();
+  });
+});
 
-async function init() {
-  buildCategories();
-  initMap();
-
-  try {
-    const response = await fetch(
-      DATA_FILE,
-      { cache: "no-store" }
-    );
-
-    if (!response.ok) {
-      throw new Error(
-        "Data file unavailable (HTTP " +
-        response.status + ")"
-      );
-    }
-
-    const result = await response.json();
-
-    records = Array.isArray(result.records)
-      ? result.records
-      : [];
-
-    geographyMetadata =
-      Array.isArray(result.geography)
-        ? result.geography
-        : [];
-
-    $("dataStatus").textContent =
-      records.length +
-      " indicator records loaded from the " +
-      "Neighbourhood Profiles data file.";
-
-  } catch (error) {
-    $("dataStatus").textContent =
-      "Unable to load indicator data. " +
-      "Confirm that elgin_dashboard_data.json " +
-      "is in the same folder as index.html. " +
-      error.message;
-  }
-
-  updateCategory();
-  updateGeography();
-}
-
-init();
+start();
 </script>
 
 </body>
