@@ -1,1163 +1,1112 @@
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#6c3f99">
-
-  <title>Neighbourhood Profiles | Elgin OHT</title>
-
-  <style>
-    :root {
-      --green: #39b54a;
-      --purple: #6c3f99;
-      --grey: #c4cacb;
-      --light-green: #e6f6e8;
-      --light-purple: #f4eefb;
-      --background: #f3f2f8;
-
-      --white: #ffffff;
-      --text: #28313c;
-      --muted: #64707b;
-      --border: #e3e3e9;
-      --shadow: 0 3px 16px rgba(40,30,70,.05);
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      margin: 0;
-      background: var(--background);
-      color: var(--text);
-      font-family: Arial, Helvetica, sans-serif;
-      line-height: 1.55;
-    }
-
-    button,
-    select {
-      font: inherit;
-    }
-
-    button {
-      cursor: pointer;
-    }
-
-    button:focus-visible,
-    select:focus-visible,
-    a:focus-visible {
-      outline: 3px solid var(--green);
-      outline-offset: 3px;
-    }
-
-    a {
-      color: var(--purple);
-    }
-
-    /* HEADER */
-
-    .site-header {
-      background: var(--white);
-      border-bottom: 1px solid var(--border);
-    }
-
-    .header-inner {
-      max-width: 1380px;
-      margin: auto;
-      padding: 14px 32px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 25px;
-    }
-
-    .logo {
-      display: block;
-      width: 230px;
-      height: 86px;
-      object-fit: contain;
-      object-position: left center;
-    }
-
-    .header-links {
-      display: flex;
-      gap: 25px;
-      align-items: center;
-    }
-
-    .header-links a {
-      font-size: 13px;
-      font-weight: 700;
-      text-decoration: none;
-    }
-
-    .header-links a:hover {
-      text-decoration: underline;
-    }
-
-    .header-links .website-link {
-      background: var(--purple);
-      color: white;
-      padding: 11px 17px;
-      border-radius: 7px;
-    }
-
-    .header-links .website-link:hover {
-      background: #58317f;
-      text-decoration: none;
-    }
-
-    /* HERO */
-
-    .hero {
-      background: var(--purple);
-      color: white;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .hero::after {
-      content: "";
-      position: absolute;
-      width: 340px;
-      height: 340px;
-      right: -110px;
-      top: -180px;
-      border: 65px solid rgba(255,255,255,.08);
-      border-radius: 50%;
-      pointer-events: none;
-    }
-
-    .hero-inner {
-      max-width: 1380px;
-      margin: auto;
-      padding: 54px 32px 58px;
-      position: relative;
-      z-index: 1;
-    }
-
-    .eyebrow {
-      color: var(--light-green);
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 1.7px;
-      text-transform: uppercase;
-    }
-
-    .hero h1 {
-      font-size: clamp(32px, 4vw, 48px);
-      line-height: 1.2;
-      margin: 14px 0;
-    }
-
-    .hero p {
-      font-size: 15px;
-      max-width: 740px;
-      color: var(--light-purple);
-      margin-bottom: 0;
-    }
-
-    /* DASHBOARD */
-
-    main {
-      max-width: 1380px;
-      margin: auto;
-      padding: 32px 32px 70px;
-    }
-
-    .section-header {
-      display: flex;
-      align-items: flex-end;
-      justify-content: space-between;
-      gap: 20px;
-      margin: 35px 0 17px;
-    }
-
-    .section-header h2 {
-      color: var(--purple);
-      font-size: 23px;
-      margin: 0 0 5px;
-    }
-
-    .section-header p {
-      color: var(--muted);
-      font-size: 13px;
-      margin: 0;
-    }
-
-    .card {
-      background: white;
-      border: 1px solid var(--border);
-      border-radius: 13px;
-      box-shadow: var(--shadow);
-      padding: 24px;
-    }
-
-    .card h3 {
-      font-size: 17px;
-      color: var(--purple);
-      margin: 0 0 7px;
-    }
-
-    .description {
-      color: var(--muted);
-      font-size: 13px;
-      margin: 0 0 18px;
-    }
-
-    /* FILTERS */
-
-    .filter-panel {
-      background: white;
-      border: 1px solid var(--border);
-      border-radius: 13px;
-      padding: 23px;
-      box-shadow: var(--shadow);
-    }
-
-    .filter-title {
-      font-weight: 700;
-      color: var(--purple);
-      margin-bottom: 15px;
-      font-size: 15px;
-    }
-
-    .filter-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 18px;
-    }
-
-    .filter label {
-      display: block;
-      font-size: 12px;
-      font-weight: 700;
-      margin-bottom: 7px;
-    }
-
-    .filter select {
-      width: 100%;
-      background: white;
-      border: 1px solid var(--grey);
-      border-radius: 7px;
-      padding: 11px 12px;
-      color: var(--text);
-    }
-
-    .filter select:hover {
-      border-color: var(--purple);
-    }
-
-    .filter-note {
-      margin-top: 16px;
-      padding: 11px 14px;
-      background: var(--light-purple);
-      color: #56347b;
-      border-radius: 7px;
-      font-size: 12px;
-    }
-
-    /* KPI CARDS */
-
-    .kpi-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 17px;
-    }
-
-    .kpi {
-      position: relative;
-      overflow: hidden;
-    }
-
-    .kpi::before {
-      content: "";
-      position: absolute;
-      left: 0;
-      top: 0;
-      bottom: 0;
-      width: 5px;
-      background: var(--purple);
-    }
-
-    .kpi:nth-child(even)::before {
-      background: var(--green);
-    }
-
-    .kpi-label {
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--muted);
-    }
-
-    .kpi-value {
-      font-size: 35px;
-      font-weight: 700;
-      color: var(--purple);
-      margin: 12px 0 5px;
-      line-height: 1.2;
-    }
-
-    .kpi-detail {
-      color: var(--muted);
-      font-size: 12px;
-    }
-
-    /* MAP AND COMPARISON */
-
-    .overview-grid {
-      display: grid;
-      grid-template-columns: 1.35fr 1fr;
-      gap: 18px;
-    }
-
-    .placeholder {
-      background: var(--light-green);
-      border: 1px dashed #9bcfa5;
-      border-radius: 10px;
-      padding: 30px 20px;
-      min-height: 300px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-    }
-
-    .placeholder-content {
-      max-width: 310px;
-    }
-
-    .placeholder-icon {
-      width: 56px;
-      height: 56px;
-      border-radius: 14px;
-      background: white;
-      color: var(--purple);
-      display: grid;
-      place-items: center;
-      margin: 0 auto 15px;
-      font-size: 25px;
-      font-weight: 700;
-    }
-
-    .placeholder h4 {
-      margin: 0 0 8px;
-      color: #335b3c;
-      font-size: 16px;
-    }
-
-    .placeholder p {
-      margin: 0;
-      font-size: 13px;
-      color: #486c50;
-    }
-
-    .comparison-placeholder {
-      background: var(--light-purple);
-      border-color: #c9b4df;
-    }
-
-    .comparison-placeholder h4 {
-      color: var(--purple);
-    }
-
-    .comparison-placeholder p {
-      color: #72558d;
-    }
-
-    /* INDICATOR CATEGORY NAVIGATION */
-
-    .category-nav {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 10px;
-      margin-bottom: 18px;
-    }
-
-    .category-button {
-      border: 1px solid var(--border);
-      background: white;
-      color: var(--text);
-      padding: 15px 10px;
-      border-radius: 9px;
-      font-weight: 700;
-      font-size: 12px;
-      transition: background .15s, border-color .15s;
-    }
-
-    .category-button:hover {
-      background: var(--light-purple);
-      border-color: var(--purple);
-    }
-
-    .category-button[aria-pressed="true"] {
-      background: var(--purple);
-      border-color: var(--purple);
-      color: white;
-    }
-
-    /* INDICATOR CONTENT */
-
-    .indicator-grid {
-      display: grid;
-      grid-template-columns: 1.4fr 1fr;
-      gap: 18px;
-    }
-
-    .indicator-placeholder {
-      min-height: 250px;
-    }
-
-    .data-note {
-      background: var(--light-purple);
-      border-left: 4px solid var(--purple);
-      padding: 15px;
-      border-radius: 0 8px 8px 0;
-      font-size: 13px;
-      margin-top: 15px;
-    }
-
-    .data-note strong {
-      color: var(--purple);
-    }
-
-    .data-note p {
-      margin: 6px 0 0;
-    }
-
-    .data-list {
-      padding-left: 19px;
-      font-size: 13px;
-      color: var(--muted);
-    }
-
-    .data-list li {
-      margin-bottom: 9px;
-    }
-
-    /* FOOTER */
-
-    footer {
-      background: white;
-      border-top: 1px solid var(--border);
-      padding: 25px 32px;
-      margin-top: 40px;
-    }
-
-    .footer-inner {
-      max-width: 1380px;
-      margin: auto;
-      display: flex;
-      justify-content: space-between;
-      gap: 20px;
-      font-size: 12px;
-      color: var(--muted);
-    }
-
-    /* RESPONSIVE DESIGN */
-
-    @media (max-width: 1050px) {
-      .kpi-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .overview-grid,
-      .indicator-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .category-nav {
-        grid-template-columns: repeat(3, 1fr);
-      }
-    }
-
-    @media (max-width: 700px) {
-      .header-inner {
-        padding: 12px 18px;
-      }
-
-      .logo {
-        width: 170px;
-        height: 70px;
-      }
-
-      .header-links a:not(.website-link) {
-        display: none;
-      }
-
-      .header-links .website-link {
-        font-size: 11px;
-        padding: 9px;
-      }
-
-      .hero-inner {
-        padding: 38px 20px;
-      }
-
-      main {
-        padding: 22px 16px 45px;
-      }
-
-      .filter-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .category-nav {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .card {
-        padding: 19px;
-      }
-
-      .kpi-value {
-        font-size: 27px;
-      }
-
-      .footer-inner {
-        flex-direction: column;
-      }
-    }
-
-    @media (max-width: 380px) {
-      .kpi-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#6c3f99">
+<title>Neighbourhood Profiles | Elgin OHT</title>
+
+<style>
+:root {
+  --green:#39b54a;
+  --purple:#6c3f99;
+  --grey:#c4cacb;
+  --lg:#e6f6e8;
+  --lp:#f4eefb;
+  --bg:#f3f2f8;
+  --ink:#29313b;
+  --muted:#56616e;
+}
+
+* { box-sizing:border-box; }
+
+body {
+  margin:0;
+  background:var(--bg);
+  font:15px/1.5 Arial,Helvetica,sans-serif;
+  color:var(--ink);
+}
+
+a { color:var(--purple); }
+button,select { font:inherit; }
+button { cursor:pointer; }
+
+button:focus-visible,
+select:focus-visible,
+a:focus-visible {
+  outline:3px solid var(--green);
+  outline-offset:3px;
+}
+
+.wrap {
+  max-width:1320px;
+  margin:auto;
+  padding:0 26px;
+}
+
+.header {
+  background:white;
+  border-bottom:1px solid #e5e5eb;
+}
+
+.header .wrap {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+  min-height:102px;
+}
+
+.logo {
+  display:block;
+  width:235px;
+  height:88px;
+  object-fit:contain;
+  object-position:left;
+}
+
+.header nav {
+  display:flex;
+  gap:22px;
+  align-items:center;
+}
+
+.header nav a {
+  font-weight:bold;
+  text-decoration:none;
+  font-size:13px;
+}
+
+.site-btn {
+  background:var(--purple);
+  color:white!important;
+  border-radius:8px;
+  padding:11px 15px;
+}
+
+.hero {
+  background:var(--purple);
+  color:white;
+  padding:44px 0 48px;
+}
+
+.hero h1 {
+  font-size:clamp(30px,4vw,47px);
+  margin:8px 0;
+}
+
+.hero p {
+  max-width:760px;
+  color:var(--lp);
+  margin:0;
+}
+
+.eyebrow {
+  text-transform:uppercase;
+  letter-spacing:2px;
+  font-size:12px;
+  color:var(--lg);
+  font-weight:bold;
+}
+
+main.wrap {
+  padding-top:27px;
+  padding-bottom:70px;
+}
+
+.panel {
+  background:white;
+  border:1px solid #e5e5eb;
+  border-radius:13px;
+  padding:22px;
+  box-shadow:0 3px 14px #26183a08;
+}
+
+.filter-grid {
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:16px;
+}
+
+.filter-grid label,
+.field label {
+  font-size:12px;
+  font-weight:bold;
+  display:block;
+  margin-bottom:7px;
+}
+
+.filter-grid select,
+.field select {
+  width:100%;
+  padding:11px;
+  border:1px solid var(--grey);
+  border-radius:8px;
+  background:white;
+  color:var(--ink);
+}
+
+.note {
+  background:var(--lp);
+  border-radius:7px;
+  padding:11px 13px;
+  color:#56347b;
+  font-size:12px;
+  margin-top:15px;
+}
+
+.section {
+  margin:33px 0 15px;
+}
+
+.section h2 {
+  color:var(--purple);
+  font-size:23px;
+  margin:0 0 3px;
+}
+
+.section p {
+  margin:0;
+  color:var(--muted);
+  font-size:13px;
+}
+
+.kpis {
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:15px;
+}
+
+.kpi {
+  border-left:5px solid var(--purple);
+}
+
+.kpi:nth-child(even) {
+  border-left-color:var(--green);
+}
+
+.kpi .label {
+  font-size:12px;
+  font-weight:bold;
+  color:var(--muted);
+}
+
+.kpi .number {
+  font-size:30px;
+  color:var(--purple);
+  font-weight:bold;
+  margin:10px 0 4px;
+}
+
+.kpi small {
+  color:var(--muted);
+  font-size:11px;
+  display:block;
+}
+
+.two {
+  display:grid;
+  grid-template-columns:1.2fr 1fr;
+  gap:16px;
+}
+
+.panel h3 {
+  margin:0 0 6px;
+  color:var(--purple);
+  font-size:18px;
+}
+
+.sub {
+  font-size:13px;
+  color:var(--muted);
+  margin:0 0 15px;
+}
+
+.empty {
+  padding:32px 20px;
+  text-align:center;
+  border:1px dashed #b7cdb7;
+  background:var(--lg);
+  border-radius:9px;
+  color:#3a6544;
+}
+
+.tabs {
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:9px;
+  margin-bottom:15px;
+}
+
+.tab {
+  padding:13px 9px;
+  border:1px solid #e5e5eb;
+  border-radius:9px;
+  background:white;
+  color:var(--ink);
+  font-weight:bold;
+  font-size:12px;
+}
+
+.tab[aria-pressed=true] {
+  background:var(--purple);
+  color:white;
+  border-color:var(--purple);
+}
+
+.controls {
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px;
+  align-items:end;
+  margin:15px 0;
+}
+
+.field {
+  flex:1;
+  min-width:190px;
+}
+
+.chart {
+  margin:15px 0;
+}
+
+.bar-row {
+  display:grid;
+  grid-template-columns:minmax(100px,180px) 1fr 75px;
+  gap:10px;
+  align-items:center;
+  margin:12px 0;
+  font-size:12px;
+}
+
+.track {
+  background:var(--lp);
+  border-radius:4px;
+  height:15px;
+  overflow:hidden;
+}
+
+.fill {
+  background:var(--purple);
+  height:100%;
+  border-radius:4px;
+}
+
+.bar-row.secondary .fill {
+  background:var(--green);
+}
+
+.value {
+  text-align:right;
+  font-weight:bold;
+}
+
+.data-table {
+  width:100%;
+  border-collapse:collapse;
+  font-size:12px;
+}
+
+.data-table th,
+.data-table td {
+  text-align:left;
+  padding:11px 9px;
+  border-bottom:1px solid #eee;
+  vertical-align:top;
+}
+
+.data-table th {
+  background:var(--lp);
+  color:#56347b;
+}
+
+.table-wrap {
+  overflow-x:auto;
+}
+
+.muted {
+  color:var(--muted);
+}
+
+.status {
+  padding:10px 13px;
+  background:var(--lg);
+  border-radius:7px;
+  font-size:12px;
+}
+
+.foot {
+  border-top:1px solid #e5e5eb;
+  background:white;
+  padding:22px 0;
+  font-size:12px;
+  color:var(--muted);
+}
+
+@media(max-width:900px) {
+  .kpis {
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .two {
+    grid-template-columns:1fr;
+  }
+
+  .tabs {
+    grid-template-columns:repeat(3,1fr);
+  }
+}
+
+@media(max-width:650px) {
+  .wrap {
+    padding-left:15px;
+    padding-right:15px;
+  }
+
+  .header .wrap {
+    min-height:80px;
+  }
+
+  .logo {
+    width:170px;
+    height:65px;
+  }
+
+  .header nav a:not(.site-btn) {
+    display:none;
+  }
+
+  .site-btn {
+    font-size:11px!important;
+  }
+
+  .filter-grid {
+    grid-template-columns:1fr;
+  }
+
+  .tabs {
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .kpi .number {
+    font-size:24px;
+  }
+
+  .panel {
+    padding:16px;
+  }
+
+  .bar-row {
+    grid-template-columns:100px 1fr 65px;
+  }
+}
+</style>
 </head>
 
 <body>
 
-  <!-- WEBSITE HEADER -->
+<header class="header">
+  <div class="wrap">
+    <a href="https://www.elginoht.ca"
+       aria-label="Elgin Ontario Health Team home">
+      <img
+        class="logo"
+        src="elgin-oht-logo.png"
+        alt="Elgin Ontario Health Team logo">
+    </a>
 
-  <header class="site-header">
-    <div class="header-inner">
-
-      <a href="https://www.elginoht.ca"
-         aria-label="Elgin Ontario Health Team home">
-        <img
-          class="logo"
-          src="elgin-oht-logo.png"
-          alt="Elgin Ontario Health Team logo"
-        >
+    <nav aria-label="Site navigation">
+      <a href="#dashboard">Dashboard</a>
+      <a href="#indicators">Health Indicators</a>
+      <a class="site-btn"
+         href="https://www.elginoht.ca">
+        Elgin OHT Website
       </a>
+    </nav>
+  </div>
+</header>
 
-      <nav class="header-links" aria-label="Main navigation">
-        <a href="#dashboard">Dashboard</a>
-        <a href="#indicators">Health Indicators</a>
-        <a href="https://www.elginoht.ca"
-           class="website-link">
-          Elgin OHT Website
-        </a>
-      </nav>
-
+<section class="hero">
+  <div class="wrap">
+    <div class="eyebrow">
+      Elgin Ontario Health Team
     </div>
-  </header>
 
-  <!-- HERO SECTION -->
+    <h1>Neighbourhood Profiles</h1>
 
-  <section class="hero">
-    <div class="hero-inner">
+    <p>
+      Explore population health, demographics,
+      healthcare access and community needs across
+      Elgin. Review local indicators and compare
+      communities to support evidence-informed planning.
+    </p>
+  </div>
+</section>
 
-      <div class="eyebrow">
-        Elgin Ontario Health Team
+<main class="wrap" id="dashboard">
+
+  <section class="panel">
+    <h3>Explore Your Neighbourhood</h3>
+
+    <div class="filter-grid">
+
+      <div>
+        <label for="level">Geography Level</label>
+        <select id="level">
+          <option value="fsa">
+            Forward Sortation Area (FSA)
+          </option>
+          <option value="csd">
+            Census Subdivision (CSD)
+          </option>
+          <option value="overall">
+            Elgin Overall
+          </option>
+        </select>
       </div>
 
-      <h1>Neighbourhood Profiles</h1>
+      <div>
+        <label for="area">Select Area</label>
+        <select id="area"></select>
+      </div>
 
+      <div>
+        <label for="compare">Compare With</label>
+        <select id="compare"></select>
+      </div>
+
+    </div>
+
+    <div class="note" id="geonote">
+      FSA and CSD values are displayed separately
+      and are not added together.
+    </div>
+  </section>
+
+  <div class="section">
+    <h2>Neighbourhood at a Glance</h2>
+    <p id="selection">
+      Choose an area to explore its indicators.
+    </p>
+  </div>
+
+  <section class="kpis"
+           id="kpis"
+           aria-label="Key indicators">
+  </section>
+
+  <div class="section">
+    <h2>Explore the Neighbourhood</h2>
+    <p>Geography and selected-area comparisons</p>
+  </div>
+
+  <div class="two">
+
+    <section class="panel">
+      <h3>Neighbourhood Map</h3>
+      <p class="sub">
+        Map boundaries will be added after the
+        geographic files have been verified.
+      </p>
+
+      <div class="empty">
+        Interactive FSA and CSD map coming soon.
+        This dashboard does not assume that postal
+        areas and municipalities share the same boundaries.
+      </div>
+    </section>
+
+    <section class="panel">
+      <h3>Neighbourhood Comparison</h3>
+
+      <p class="sub">
+        Select a comparison area and indicator
+        to view available values.
+      </p>
+
+      <div class="field">
+        <label for="comparisonIndicator">
+          Indicator
+        </label>
+        <select id="comparisonIndicator"></select>
+      </div>
+
+      <div class="chart" id="comparisonChart"></div>
+    </section>
+
+  </div>
+
+  <section id="indicators">
+
+    <div class="section">
+      <h2>Health and Community Indicators</h2>
       <p>
-        Explore population health, demographics,
-        healthcare access and community needs across
-        Elgin. These profiles support evidence-informed
-        planning and a better understanding of the
-        communities we serve.
+        Explore the data from your neighbourhood
+        profiles workbook.
+      </p>
+    </div>
+
+    <div class="tabs" id="tabs"></div>
+
+    <div class="panel">
+
+      <h3 id="sectionTitle">
+        Population &amp; Access
+      </h3>
+
+      <p class="sub" id="sectionSubtitle">
+        Indicator values and original sources
+      </p>
+
+      <div class="controls">
+        <div class="field">
+          <label for="indicator">
+            Choose Indicator
+          </label>
+          <select id="indicator"></select>
+        </div>
+      </div>
+
+      <div id="indicatorChart"></div>
+
+      <h3 style="margin-top:25px">
+        Available Records
+      </h3>
+
+      <p class="sub">
+        Values are shown with original units,
+        dates, sources and applicable breakdowns.
+      </p>
+
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Area</th>
+              <th>Indicator / Breakdown</th>
+              <th>Value</th>
+              <th>Period</th>
+              <th>Source</th>
+            </tr>
+          </thead>
+          <tbody id="records"></tbody>
+        </table>
+      </div>
+
+      <p class="status"
+         id="recordCount"
+         role="status">
       </p>
 
     </div>
   </section>
 
-  <main id="dashboard">
-
-    <!-- GEOGRAPHY FILTERS -->
-
-    <section class="filter-panel"
-             aria-label="Dashboard filters">
-
-      <div class="filter-title">
-        Explore Your Neighbourhood
-      </div>
-
-      <div class="filter-grid">
-
-        <div class="filter">
-          <label for="geoLevel">Geography Level</label>
-          <select id="geoLevel">
-            <option value="fsa">
-              Forward Sortation Area (FSA)
-            </option>
-            <option value="csd">
-              Census Subdivision (CSD)
-            </option>
-          </select>
-        </div>
-
-        <div class="filter">
-          <label for="areaSelect">
-            Select Neighbourhood
-          </label>
-          <select id="areaSelect"></select>
-        </div>
-
-        <div class="filter">
-          <label for="compareSelect">
-            Compare With
-          </label>
-          <select id="compareSelect"></select>
-        </div>
-
-      </div>
-
-      <div class="filter-note"
-           id="filterNote"
-           role="status">
-        FSA and CSD indicators are kept separate
-        to support accurate comparisons.
-      </div>
-
-    </section>
-
-    <!-- SUMMARY INDICATORS -->
-
-    <div class="section-header">
-      <div>
-        <h2>Neighbourhood at a Glance</h2>
-        <p id="selectionSummary">
-          Explore key population and health indicators.
-        </p>
-      </div>
-    </div>
-
-    <section class="kpi-grid"
-             aria-label="Key neighbourhood indicators">
-
-      <div class="card kpi">
-        <div class="kpi-label">
-          Total Population
-        </div>
-        <div class="kpi-value"
-             id="populationValue">—</div>
-        <div class="kpi-detail">
-          Awaiting verified data
-        </div>
-      </div>
-
-      <div class="card kpi">
-        <div class="kpi-label">
-          Primary Care Access
-        </div>
-        <div class="kpi-value"
-             id="primaryCareValue">—</div>
-        <div class="kpi-detail">
-          Awaiting verified data
-        </div>
-      </div>
-
-      <div class="card kpi">
-        <div class="kpi-label">
-          Adults Aged 65+
-        </div>
-        <div class="kpi-value"
-             id="olderAdultsValue">—</div>
-        <div class="kpi-detail">
-          Awaiting verified data
-        </div>
-      </div>
-
-      <div class="card kpi">
-        <div class="kpi-label">
-          Chronic Disease
-        </div>
-        <div class="kpi-value"
-             id="chronicValue">—</div>
-        <div class="kpi-detail">
-          Awaiting verified data
-        </div>
-      </div>
-
-    </section>
-
-    <!-- MAP AND COMPARISON -->
-
-    <div class="section-header">
-      <div>
-        <h2>Explore the Neighbourhood</h2>
-        <p>
-          Understand geographic patterns and compare
-          communities across Elgin.
-        </p>
-      </div>
-    </div>
-
-    <section class="overview-grid">
-
-      <div class="card">
-        <h3>Interactive Neighbourhood Map</h3>
-
-        <p class="description"
-           id="mapDescription">
-          Explore the selected geography.
-        </p>
-
-        <div class="placeholder">
-          <div class="placeholder-content">
-
-            <div class="placeholder-icon">
-              &#8982;
-            </div>
-
-            <h4>Neighbourhood Map</h4>
-
-            <p>
-              Geographic boundary data will be added
-              here to display interactive FSA and CSD
-              neighbourhood maps.
-            </p>
-
-          </div>
-        </div>
-      </div>
-
-      <div class="card">
-        <h3>Neighbourhood Comparison</h3>
-
-        <p class="description">
-          Compare key population and health indicators
-          between selected areas.
-        </p>
-
-        <div class="placeholder comparison-placeholder">
-          <div class="placeholder-content">
-
-            <div class="placeholder-icon">
-              &#9638;
-            </div>
-
-            <h4>Comparison Chart</h4>
-
-            <p id="comparisonMessage">
-              Choose a neighbourhood in the filters
-              above to prepare a comparison.
-            </p>
-
-          </div>
-        </div>
-      </div>
-
-    </section>
-
-    <!-- INDICATOR CATEGORIES -->
-
-    <section id="indicators">
-
-      <div class="section-header">
-        <div>
-          <h2>Health and Community Indicators</h2>
-          <p>
-            Select a category to explore neighbourhood
-            health and community characteristics.
-          </p>
-        </div>
-      </div>
-
-      <nav class="category-nav"
-           aria-label="Indicator categories">
-
-        <button
-          class="category-button"
-          type="button"
-          data-category="population"
-          aria-pressed="true">
-          Population &amp; Access
-        </button>
-
-        <button
-          class="category-button"
-          type="button"
-          data-category="demographics"
-          aria-pressed="false">
-          Demographics &amp; Equity
-        </button>
-
-        <button
-          class="category-button"
-          type="button"
-          data-category="chronic"
-          aria-pressed="false">
-          Chronic Disease
-        </button>
-
-        <button
-          class="category-button"
-          type="button"
-          data-category="mental"
-          aria-pressed="false">
-          Mental Health
-        </button>
-
-        <button
-          class="category-button"
-          type="button"
-          data-category="social"
-          aria-pressed="false">
-          Social Needs
-        </button>
-
-      </nav>
-
-      <div class="indicator-grid">
-
-        <div class="card">
-          <h3 id="categoryTitle">
-            Population &amp; Access
-          </h3>
-
-          <p class="description"
-             id="categoryDescription">
-            Explore population and healthcare
-            access indicators.
-          </p>
-
-          <div class="placeholder indicator-placeholder">
-            <div class="placeholder-content">
-
-              <div class="placeholder-icon">
-                &#9638;
-              </div>
-
-              <h4>Indicator Visualization</h4>
-
-              <p id="indicatorMessage">
-                Verified indicators and charts
-                will appear here once the Excel
-                workbook is connected.
-              </p>
-
-            </div>
-          </div>
-        </div>
-
-        <div class="card">
-          <h3>About the Data</h3>
-
-          <p class="description">
-            The Neighbourhood Profiles dashboard
-            brings together information from multiple
-            data sources to support population
-            health planning.
-          </p>
-
-          <ul class="data-list">
-            <li>
-              Indicators will retain their original
-              source and reporting period.
-            </li>
-
-            <li>
-              FSA and CSD geography will be
-              maintained separately.
-            </li>
-
-            <li>
-              Data will be displayed using its
-              appropriate unit and definition.
-            </li>
-
-            <li>
-              Missing or unavailable values will
-              be clearly identified.
-            </li>
-          </ul>
-
-          <div class="data-note">
-            <strong>Data Status</strong>
-            <p>
-              This is a dashboard prototype.
-              Verified population health data
-              has not yet been connected.
-            </p>
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-  </main>
-
-  <!-- FOOTER -->
-
-  <footer>
-    <div class="footer-inner">
-      <span>
-        &copy; Elgin Ontario Health Team
-        &middot; Neighbourhood Profiles
-      </span>
-
-      <span>
-        Population Health Planning
-        &middot; Dashboard Prototype
-      </span>
-    </div>
-  </footer>
-
-  <!-- INTERACTIVE JAVASCRIPT -->
-
-  <script>
-    "use strict";
-
-    /*
-      Geography options are preliminary.
-      FSA and CSD are separate geographic levels.
-    */
-
-    const geography = {
-      fsa: [
-        "N5H",
-        "N5P",
-        "N5L",
-        "N0J",
-        "N0L",
-        "N0M",
-        "N5R"
-      ],
-
-      csd: [
-        "St. Thomas",
-        "Aylmer",
-        "Central Elgin",
-        "Malahide",
-        "Bayham",
-        "Southwold",
-        "Dutton/Dunwich",
-        "West Elgin"
-      ]
-    };
-
-    const categories = {
-      population: {
-        title: "Population & Access",
-        description:
-          "Explore population size, population trends " +
-          "and access to healthcare services."
-      },
-
-      demographics: {
-        title: "Demographics & Equity",
-        description:
-          "Explore age, household characteristics " +
-          "and demographic indicators."
-      },
-
-      chronic: {
-        title: "Chronic Disease",
-        description:
-          "Explore available chronic disease " +
-          "indicators and geographic patterns."
-      },
-
-      mental: {
-        title: "Mental Health",
-        description:
-          "Explore mental health indicators " +
-          "and related community needs."
-      },
-
-      social: {
-        title: "Social Needs",
-        description:
-          "Explore socioeconomic conditions " +
-          "and social determinants of health."
-      }
-    };
-
-    const levelSelect =
-      document.getElementById("geoLevel");
-
-    const areaSelect =
-      document.getElementById("areaSelect");
-
-    const compareSelect =
-      document.getElementById("compareSelect");
-
-    function populateSelect(
-      select,
-      values,
-      firstLabel
-    ) {
-      select.replaceChildren();
-
-      const defaultOption =
-        document.createElement("option");
-
-      defaultOption.value = "";
-      defaultOption.textContent = firstLabel;
-
-      select.appendChild(defaultOption);
-
-      values.forEach(value => {
-        const option =
-          document.createElement("option");
-
-        option.value = value;
-        option.textContent = value;
-
-        select.appendChild(option);
-      });
-    }
-
-    function updateGeography() {
-      const type = levelSelect.value;
-      const values = geography[type];
-
-      populateSelect(
-        areaSelect,
-        values,
-        type === "fsa"
-          ? "All FSAs"
-          : "All CSDs"
-      );
-
-      populateSelect(
-        compareSelect,
-        values,
-        "No comparison"
-      );
-
-      document.getElementById(
-        "mapDescription"
-      ).textContent =
-        "Explore " +
-        type.toUpperCase() +
-        " geography across Elgin.";
-
-      updateSelection();
-    }
-
-    function updateSelection() {
-      const type =
-        levelSelect.value.toUpperCase();
-
-      const selected =
-        areaSelect.value ||
-        "All " + type + "s";
-
-      const compared =
-        compareSelect.value;
-
-      document.getElementById(
-        "selectionSummary"
-      ).textContent =
-        "Selected geography: " + selected +
-        (compared
-          ? " · Comparing with " + compared
-          : "");
-
-      document.getElementById(
-        "filterNote"
-      ).textContent =
-        "Viewing " + type +
-        " geography. FSA and CSD data are " +
-        "not combined or treated as equivalent.";
-
-      document.getElementById(
-        "comparisonMessage"
-      ).textContent =
-        compared
-          ? "Comparison selected: " +
-            selected + " and " + compared +
-            ". Charts will appear when verified " +
-            "indicator data is connected."
-          : "Select a comparison neighbourhood " +
-            "to prepare a chart.";
-
-      /*
-        KPI values will be populated
-        once verified data is connected.
-      */
-    }
-
-    function updateCategory(categoryKey) {
-      const category =
-        categories[categoryKey];
-
-      if (!category) return;
-
-      document.getElementById(
-        "categoryTitle"
-      ).textContent = category.title;
-
-      document.getElementById(
-        "categoryDescription"
-      ).textContent = category.description;
-
-      document.getElementById(
-        "indicatorMessage"
-      ).textContent =
-        "Verified " +
-        category.title.toLowerCase() +
-        " indicators and charts will appear " +
-        "here once the data is connected.";
-
-      document.querySelectorAll(
-        ".category-button"
-      ).forEach(button => {
-        button.setAttribute(
-          "aria-pressed",
-          String(
-            button.dataset.category ===
-            categoryKey
-          )
-        );
-      });
-    }
-
-    levelSelect.addEventListener(
-      "change",
-      updateGeography
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    Elgin Ontario Health Team · Neighbourhood Profiles
+    · Data sources and reporting periods vary by indicator
+  </div>
+</footer>
+
+<script>
+'use strict';
+
+const FILE = 'elgin_dashboard_data.json';
+
+const sections = [
+  'Population & Access',
+  'Demographics & Equity',
+  'Chronic Disease',
+  'Mental Health',
+  'Social Needs'
+];
+
+const $ = id => document.getElementById(id);
+
+let data = [];
+let geo = [];
+let section = sections[0];
+
+const fsa = [
+  'N5H', 'N5P', 'N5L',
+  'N0J', 'N0L', 'N0M', 'N5R'
+];
+
+const csd = [
+  'St. Thomas',
+  'Aylmer',
+  'Central Elgin',
+  'Malahide',
+  'Bayham',
+  'Southwold',
+  'Dutton/Dunwich',
+  'West Elgin'
+];
+
+function option(select, value, label) {
+  const o = document.createElement('option');
+  o.value = value;
+  o.textContent = label ?? value;
+  select.appendChild(o);
+}
+
+function fill(select, options, defaultText) {
+  select.replaceChildren();
+
+  if (defaultText !== null) {
+    option(select, '', defaultText);
+  }
+
+  options.forEach(x => option(select, x));
+}
+
+function typeAreas() {
+  return $('level').value === 'fsa'
+    ? fsa
+    : $('level').value === 'csd'
+      ? csd
+      : ['ELGIN'];
+}
+
+function format(r) {
+  if (!r ||
+      r.value === null ||
+      r.value === undefined ||
+      r.value === '') {
+    return 'Not available';
+  }
+
+  if (r.unit === 'Percentage' &&
+      typeof r.value === 'number') {
+    return (r.value * 100).toLocaleString('en-CA', {
+      maximumFractionDigits: 2
+    }) + '%';
+  }
+
+  if (typeof r.value === 'number') {
+    return r.value.toLocaleString('en-CA', {
+      maximumFractionDigits: 2
+    }) + (
+      r.unit === 'Count' || r.unit === 'Quintile'
+        ? ''
+        : ' ' + r.unit
+    );
+  }
+
+  return String(r.value);
+}
+
+function recordsFor(area, sec) {
+  return data.filter(r =>
+    r.geography === area &&
+    (!sec || r.section === sec)
+  );
+}
+
+function selectedArea() {
+  return $('area').value;
+}
+
+function setGeography() {
+  const areas = typeAreas();
+
+  fill(
+    $('area'),
+    areas,
+    $('level').value === 'overall'
+      ? null
+      : 'Choose an area'
+  );
+
+  fill(
+    $('compare'),
+    areas,
+    'No comparison'
+  );
+
+  if ($('level').value === 'overall') {
+    $('area').value = 'ELGIN';
+  }
+
+  renderAll();
+}
+
+function first(area, indicator) {
+  return recordsFor(area).find(r =>
+    r.indicator === indicator &&
+    !r.age_group &&
+    !r.sex
+  );
+}
+
+function kpi(title, r) {
+  const e = document.createElement('div');
+  e.className = 'panel kpi';
+
+  const t = document.createElement('div');
+  t.className = 'label';
+  t.textContent = title;
+
+  const v = document.createElement('div');
+  v.className = 'number';
+  v.textContent = format(r);
+
+  const d = document.createElement('small');
+  d.textContent = r
+    ? (r.period || 'Period not specified') +
+      ' · ' + (r.unit || '')
+    : 'No matching indicator for this area';
+
+  e.append(t, v, d);
+  return e;
+}
+
+function renderKpis() {
+  const a = selectedArea();
+
+  $('selection').textContent = a
+    ? 'Showing indicators for ' + a
+    : 'Select an area to see its available indicators';
+
+  $('kpis').replaceChildren();
+
+  const metrics = [
+    ['Total Population', 'Total Population'],
+    ['Unattached Population', 'Unattached Population'],
+    ['Attributed Population', 'Attributed Population'],
+    [
+      'Mental Health & Addictions',
+      'Population with any Mental Health & Addictions'
+    ]
+  ];
+
+  metrics.forEach(([label, name]) => {
+    $('kpis').appendChild(
+      kpi(label, a ? first(a, name) : null)
+    );
+  });
+}
+
+function allIndicators(sec) {
+  return [
+    ...new Set(
+      data
+        .filter(r => r.section === sec)
+        .map(r => r.indicator)
+    )
+  ].sort((a, b) => a.localeCompare(b));
+}
+
+function setSection(next) {
+  section = next;
+
+  $('sectionTitle').textContent = next;
+
+  [...$('tabs').children].forEach(b => {
+    b.setAttribute(
+      'aria-pressed',
+      String(b.dataset.section === next)
+    );
+  });
+
+  fill(
+    $('indicator'),
+    allIndicators(next),
+    'All indicators'
+  );
+
+  renderIndicators();
+}
+
+function chart(container, rows) {
+  container.replaceChildren();
+
+  const valid = rows.filter(r =>
+    typeof r.value === 'number' &&
+    r.unit !== 'Quintile'
+  );
+
+  if (!valid.length) {
+    const p = document.createElement('p');
+    p.className = 'muted';
+    p.textContent =
+      'No comparable numeric values available for this selection.';
+    container.appendChild(p);
+    return;
+  }
+
+  const unit = valid[0].unit;
+
+  const comparable = valid.filter(r =>
+    r.unit === unit
+  );
+
+  const max = Math.max(
+    ...comparable.map(r => r.value),
+    0
+  );
+
+  comparable.forEach((r, i) => {
+    const row = document.createElement('div');
+    row.className =
+      'bar-row' + (i % 2 ? ' secondary' : '');
+
+    const name = document.createElement('span');
+    name.textContent = r.geography;
+
+    const track = document.createElement('div');
+    track.className = 'track';
+
+    const fill = document.createElement('div');
+    fill.className = 'fill';
+
+    fill.style.width =
+      (max > 0
+        ? Math.max(0, r.value / max * 100)
+        : 0) + '%';
+
+    track.appendChild(fill);
+
+    const value = document.createElement('span');
+    value.className = 'value';
+    value.textContent = format(r);
+
+    row.append(name, track, value);
+    container.appendChild(row);
+  });
+}
+
+function renderComparison() {
+  const a = selectedArea();
+  const b = $('compare').value;
+
+  const names = [
+    ...new Set(
+      [
+        ...recordsFor(a),
+        ...recordsFor(b)
+      ].map(r => r.indicator)
+    )
+  ].sort();
+
+  const previous =
+    $('comparisonIndicator').value;
+
+  fill(
+    $('comparisonIndicator'),
+    names,
+    'Choose indicator'
+  );
+
+  if (names.includes(previous)) {
+    $('comparisonIndicator').value = previous;
+  }
+
+  const ind =
+    $('comparisonIndicator').value;
+
+  const el = $('comparisonChart');
+
+  if (!a || !b || !ind) {
+    el.textContent =
+      'Select two areas and an indicator to compare.';
+    return;
+  }
+
+  const rows = [a, b]
+    .map(x =>
+      recordsFor(x).find(r =>
+        r.indicator === ind &&
+        !r.age_group &&
+        !r.sex
+      )
+    )
+    .filter(Boolean);
+
+  if (rows.length !== 2) {
+    el.textContent =
+      'This indicator is not available for both selected areas.';
+    return;
+  }
+
+  if (rows[0].unit !== rows[1].unit) {
+    el.textContent =
+      'Units differ; comparison unavailable.';
+    return;
+  }
+
+  chart(el, rows);
+}
+
+function renderIndicators() {
+  const a = selectedArea();
+  const ind = $('indicator').value;
+
+  const rows = recordsFor(a, section)
+    .filter(r =>
+      !ind || r.indicator === ind
     );
 
-    areaSelect.addEventListener(
-      "change",
-      updateSelection
-    );
+  const chartRows = rows.filter(r =>
+    typeof r.value === 'number' &&
+    !r.age_group &&
+    !r.sex
+  );
 
-    compareSelect.addEventListener(
-      "change",
-      updateSelection
-    );
+  $('indicatorChart').replaceChildren();
 
-    document.querySelectorAll(
-      ".category-button"
-    ).forEach(button => {
-      button.addEventListener(
-        "click",
-        () => {
-          updateCategory(
-            button.dataset.category
-          );
-        }
-      );
+  if (ind && chartRows.length === 1) {
+    const p = document.createElement('p');
+    p.className = 'status';
+    p.textContent =
+      ind + ': ' + format(chartRows[0]);
+    $('indicatorChart').appendChild(p);
+
+  } else if (ind && rows.length > 1) {
+    const p = document.createElement('p');
+    p.className = 'muted';
+    p.textContent =
+      'Multiple records or breakdowns are available; see the table below.';
+    $('indicatorChart').appendChild(p);
+
+  } else if (!rows.length) {
+    const p = document.createElement('p');
+    p.className = 'muted';
+    p.textContent =
+      'No records available for this selection.';
+    $('indicatorChart').appendChild(p);
+  }
+
+  const tbody = $('records');
+  tbody.replaceChildren();
+
+  rows.forEach(r => {
+    const tr = document.createElement('tr');
+
+    const breakdown = [
+      r.age_group,
+      r.sex,
+      r.condition
+    ].filter(Boolean).join(' · ');
+
+    const cells = [
+      r.geography,
+      r.indicator +
+        (breakdown ? ' — ' + breakdown : ''),
+      format(r),
+      r.period || 'Not specified',
+      r.source || 'Not specified'
+    ];
+
+    cells.forEach(v => {
+      const td = document.createElement('td');
+      td.textContent = v;
+      tr.appendChild(td);
     });
 
-    updateGeography();
-    updateCategory("population");
-  </script>
+    tbody.appendChild(tr);
+  });
+
+  $('recordCount').textContent =
+    rows.length +
+    ' record(s) shown for ' +
+    (a || 'no selected area') +
+    '. Values are not aggregated across geographies.';
+}
+
+function renderAll() {
+  $('geonote').textContent =
+    'Viewing ' +
+    $('level').options[
+      $('level').selectedIndex
+    ].text +
+    '. FSA and CSD boundaries and totals are not interchangeable.';
+
+  renderKpis();
+  renderComparison();
+  renderIndicators();
+}
+
+sections.forEach(s => {
+  const b = document.createElement('button');
+
+  b.className = 'tab';
+  b.type = 'button';
+  b.dataset.section = s;
+  b.textContent = s;
+
+  b.addEventListener('click', () =>
+    setSection(s)
+  );
+
+  $('tabs').appendChild(b);
+});
+
+$('level').addEventListener(
+  'change',
+  setGeography
+);
+
+$('area').addEventListener(
+  'change',
+  renderAll
+);
+
+$('compare').addEventListener(
+  'change',
+  renderComparison
+);
+
+$('comparisonIndicator').addEventListener(
+  'change',
+  renderComparison
+);
+
+$('indicator').addEventListener(
+  'change',
+  renderIndicators
+);
+
+async function init() {
+  try {
+    const response = await fetch(FILE, {
+      cache:'no-store'
+    });
+
+    if (!response.ok) {
+      throw Error('HTTP ' + response.status);
+    }
+
+    const obj = await response.json();
+
+    data = obj.records || [];
+    geo = obj.geography || [];
+
+    setGeography();
+    setSection(sections[0]);
+
+    $('geonote').textContent +=
+      ' Loaded ' +
+      data.length +
+      ' indicator records.';
+
+  } catch (err) {
+    setGeography();
+    setSection(sections[0]);
+
+    $('geonote').textContent =
+      'Data file could not be loaded. ' +
+      'Upload elgin_dashboard_data.json beside index.html. ' +
+      'Details: ' + err.message;
+  }
+}
+
+init();
+</script>
 
 </body>
 </html>
